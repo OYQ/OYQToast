@@ -13,6 +13,7 @@
 		355AE6E71E077B3400DC03F8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 355AE6E51E077B3400DC03F8 /* Main.storyboard */; };
 		355AE6E91E077B3400DC03F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 355AE6E81E077B3400DC03F8 /* Assets.xcassets */; };
 		355AE6EC1E077B3400DC03F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 355AE6EA1E077B3400DC03F8 /* LaunchScreen.storyboard */; };
+		355AE6F51E077C7D00DC03F8 /* UIView+OYQToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 355AE6F41E077C7D00DC03F8 /* UIView+OYQToast.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		355AE6E81E077B3400DC03F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		355AE6EB1E077B3400DC03F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		355AE6ED1E077B3400DC03F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		355AE6F31E077C7D00DC03F8 /* UIView+OYQToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+OYQToast.h"; sourceTree = "<group>"; };
+		355AE6F41E077C7D00DC03F8 /* UIView+OYQToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+OYQToast.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,8 @@
 				355AE6E01E077B3400DC03F8 /* AppDelegate.m */,
 				355AE6E21E077B3400DC03F8 /* ViewController.h */,
 				355AE6E31E077B3400DC03F8 /* ViewController.m */,
+				355AE6F31E077C7D00DC03F8 /* UIView+OYQToast.h */,
+				355AE6F41E077C7D00DC03F8 /* UIView+OYQToast.m */,
 				355AE6E51E077B3400DC03F8 /* Main.storyboard */,
 				355AE6E81E077B3400DC03F8 /* Assets.xcassets */,
 				355AE6EA1E077B3400DC03F8 /* LaunchScreen.storyboard */,
@@ -150,6 +155,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				355AE6F51E077C7D00DC03F8 /* UIView+OYQToast.m in Sources */,
 				355AE6E41E077B3400DC03F8 /* ViewController.m in Sources */,
 				355AE6E11E077B3400DC03F8 /* AppDelegate.m in Sources */,
 				355AE6DE1E077B3400DC03F8 /* main.m in Sources */,
