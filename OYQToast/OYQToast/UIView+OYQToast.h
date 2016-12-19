@@ -9,31 +9,29 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, OYQToastPosition){
-	OYQToastPositionDefault = 0,	//居中显示
-	OYQToastPositionBottom  = 1,	//下方显示
-	OYQToastPositionTop     = 2     //上方显示
+	OYQToastPositionDefault  = 0,	//居中显示
+	OYQToastPositionBottom   = 1,	//下方显示
+	OYQToastPositionTop      = 2    //上方显示
 };
 
 typedef NS_ENUM(NSInteger, OYQImagePosition){
-	OYQImagePositionLeft    = 0,	//左方显示
-	OYQImagePositionRight   = 1,	//右方显示
-	OYQImagePositionBottom  = 2,    //下方显示
-	OYQImagePositionTop     = 3     //上方显示
+	OYQImagePositionDefault  = 0,	//左方显示
+	OYQImagePositionRight    = 1,	//右方显示
+	OYQImagePositionBottom   = 2,   //下方显示
+	OYQImagePositionTop      = 3    //上方显示
+	
 };
 
 
 
-static const float toastDuration = 1.5;
-
 @interface UIView (OYQToast)
-
 /**
  创建纯文字的Toast，默认延时toastDuration秒,在下方显示
 
  @param message 需要显示的文字
  @return 返回Toast
  */
-+ (UIView *)OYQ_makeToast:(NSString *)message;
+- (UIView *)OYQ_makeToast:(NSString *)message;
 
 /**
  创建纯文字的Toast，延时duration秒,在下方显示
@@ -42,7 +40,7 @@ static const float toastDuration = 1.5;
  @param duration 延时时间
  @return 返回Toast
  */
-+ (UIView *)OYQ_makeToast:(NSString *)message
+- (UIView *)OYQ_makeToast:(NSString *)message
 				 duration:(float)duration;
 
 /**
@@ -53,7 +51,7 @@ static const float toastDuration = 1.5;
  @param position 显示位置OYQToastPosition
  @return 返回Toast
  */
-+ (UIView *)OYQ_makeToast:(NSString *)message
+- (UIView *)OYQ_makeToast:(NSString *)message
 				 duration:(float)duration
 				 position:(OYQToastPosition)position;
 
@@ -70,7 +68,7 @@ static const float toastDuration = 1.5;
  @return 返回Toast
  */
 #pragma TODO - 改为支持gif图
-+ (UIView *)OYQ_makeToast:(NSString *)message
+- (UIView *)OYQ_makeToast:(NSString *)message
 					title:(NSString *)title
 				 duration:(float)duration
 			toastPosition:(OYQToastPosition)toastPosition
@@ -82,7 +80,7 @@ static const float toastDuration = 1.5;
 
  @return 返回Toast
  */
-+ (UIView *)OYQ_makeToastActivity;
+- (UIView *)OYQ_makeToastActivity;
 
 /**
  自定义view创建Toast
@@ -90,5 +88,5 @@ static const float toastDuration = 1.5;
  @param view 自定义的View
  @return 返回Toast
  */
-+ (UIView *)OYQ_makeToastWithView:(UIView *)view;
+- (UIView *)OYQ_makeToastWithView:(UIView *)view;
 @end
