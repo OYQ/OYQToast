@@ -41,13 +41,13 @@
 }
 
 - (void)button0Click{
-	//[self.view OYQ_makeToast:@"123阿大大一奥苏姑嫂发"];
-	[self.view OYQ_makeToast:@"123阿大大一奥苏姑嫂发SD撒SD素雅US一大" title:nil duration:0.3f toastPosition:OYQToastPositionBottom image:[UIImage imageNamed:@"icon64_wx_logo"] imagePosition:OYQImagePositionDefault];
+	[self.view OYQ_makeToast:@"123阿大大一奥苏姑嫂发"];
+	//[self.view OYQ_makeToast:@"123阿大大一奥苏姑嫂发SD撒SD素雅US一大" title:nil duration:0.3f toastPosition:OYQToastPositionBottom image:[UIImage imageNamed:@"icon64_wx_logo"] imagePosition:OYQImagePositionBottom];
 }
 
 - (void)button1Click{
 	//[self.view OYQ_makeToast:@"123阿大大一奥苏姑嫂发"];
-	[self.view OYQ_makeToast:@"123阿素雅US一大" title:nil duration:0.3f toastPosition:OYQToastPositionTop image:[UIImage imageNamed:@"icon64_wx_logo"] imagePosition:OYQImagePositionDefault];
+	[self.view OYQ_makeToast:@"123阿素雅US一大" title:@"标题" duration:0.3f toastPosition:OYQToastPositionDefault image:nil imagePosition:OYQImagePositionTop];
 }
 
 @end

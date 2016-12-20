@@ -22,24 +22,12 @@ static const float OYQToastShowDuration = 0.3f;
 static const float OYQToastDuration = 2.0f;
 //消失动画延时时间
 static const float OYQToastDismissDuration = 0.15f;
-//Toast的最低高度
-static const CGFloat ToastMinHeight = 30;
 // 显示图片的宽高
 static const CGFloat imageViewWH = 50;
+// Toast最小高度
+static const CGFloat OYQToastMinHeight = 30;
 
 @implementation UIView (OYQToast)
-
-/*
-+ (instancetype)shareToast{
-	static UIView *view = nil;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		view = [[UIView alloc] init];
-	});
-	return view;
-	
-}
- */
 
 - (UIView *)OYQ_makeToast:(NSString *)message{
 	NSAssert(message != nil, @"message不能为空");
@@ -47,9 +35,9 @@ static const CGFloat imageViewWH = 50;
 			   position:OYQToastPositionDefault
 				  title:nil
 				  image:nil
-		  imagePosition:OYQImagePositionDefault];
+		  imagePosition:OYQImagePositionDefault
+			   duration:OYQToastShowDuration];
 	
-	[self showToastWithDuration:OYQToastShowDuration];
 	return self;
 }
 
@@ -65,9 +53,9 @@ static const CGFloat imageViewWH = 50;
 			   position:toastPosition
 				  title:title
 				  image:image
-		  imagePosition:imagePosition];
+		  imagePosition:imagePosition
+			   duration:OYQToastShowDuration];
 	
-	[self showToastWithDuration:duration];
 	return self;
 }
 
@@ -75,9 +63,15 @@ static const CGFloat imageViewWH = 50;
 			 position:(OYQToastPosition)position
 				title:(NSString *)title
 				image:(UIImage *)image
-		imagePosition:(OYQImagePosition)imagePosition{
+		imagePosition:(OYQImagePosition)imagePosition
+			 duration:(float)duration{
 	
-	OYQToastBackgroundView *background = [OYQToastBackgroundView shareBackgroundView];
+	UIView *background = [[UIView alloc] init];
+	background.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+	background.alpha = 0.0f;
+	background.layer.cornerRadius = 5;
+	background.layer.masksToBounds = YES;
+	
 	[background removeFromSuperview];
 	for(UIView *view in [background subviews]){
 		[view removeFromSuperview];
@@ -115,68 +109,74 @@ static const CGFloat imageViewWH = 50;
 	}
 	
 	
-	
+	CGSize messageSize = [message boundingRectWithSize:CGSizeMake(MainScreenWidth-imageViewWH, MainScreenHeight-imageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
+	CGFloat messageLabelW = messageSize.width;
+	CGFloat messageLabelH = messageSize.height;
 	
 	if (image && title) {//同时有图片和标题
 		
-	}
-	
-	if (title) {//只有标题
 		
-	}
-	
-	if (image) {//只有图片
-		CGSize titleSize = [message boundingRectWithSize:CGSizeMake(MainScreenWidth-imageViewWH, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
-		CGFloat messageLabelW = titleSize.width;
-		CGFloat messageLabelH = titleSize.height;
+	}else if (title){//只有标题
+		CGSize titleSize = [message boundingRectWithSize:CGSizeMake(MainScreenWidth-imageViewWH, MainScreenHeight-imageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
+		CGFloat titleLabelW = titleSize.width;
+		CGFloat titleLabelH = titleSize.height;
 		
+		backgroundW = MAX(titleLabelW, messageLabelW);
+		backgroundH = titleLabelH + messageLabelH;
+		
+		titleLabel.frame = CGRectMake((backgroundW-titleLabelW)/2, 0, titleLabelW, titleLabelH);
+		messageLabel.frame = CGRectMake((backgroundW-messageLabelW)/2, titleLabelH, messageLabelW, messageLabelH);
+		
+	}else if (image){//只有图片
 		switch (imagePosition) {
 			case OYQImagePositionDefault:
 				backgroundW = imageViewWH + messageLabelW;
 				backgroundH = MAX(imageViewWH, messageLabelH);
-
+				
 				imageView.frame = CGRectMake(0, (backgroundH-imageViewWH)/2, imageViewWH, imageViewWH);
 				messageLabel.frame = CGRectMake(imageViewWH, (backgroundH-messageLabelH)/2, messageLabelW, messageLabelH);
 				
-				NSLog(@"imageX-%d,imageY-%f,messageX-%f,messageY-%f",0,(backgroundH-imageViewWH)/2, imageViewWH,(backgroundH-messageLabelH)/2);
+				//NSLog(@"imageX-%d,imageY-%f,messageX-%f,messageY-%f",0,(backgroundH-imageViewWH)/2, imageViewWH,(backgroundH-messageLabelH)/2);
 				break;
 			case OYQImagePositionRight:
-				imageView.frame = CGRectMake(self.frame.size.width - imageViewWH, (self.frame.size.height-imageViewWH)/2, imageViewWH, imageViewWH);
+				backgroundW = imageViewWH + messageLabelW;
+				backgroundH = MAX(imageViewWH, messageLabelH);
+				
+				imageView.frame = CGRectMake(backgroundW-imageViewWH, (backgroundH-imageViewWH)/2, imageViewWH, imageViewWH);
+				messageLabel.frame = CGRectMake(0, (backgroundH-messageLabelH)/2, messageLabelW, messageLabelH);
 				break;
 			case OYQImagePositionTop:
-				imageView.frame = CGRectMake((self.frame.size.width-imageViewWH)/2, 0, imageViewWH, imageViewWH);
+				backgroundW = MAX(imageViewWH, messageLabelW);
+				backgroundH = imageViewWH + messageLabelH;
+				
+				imageView.frame = CGRectMake((backgroundW-imageViewWH)/2, 0, imageViewWH, imageViewWH);
+				messageLabel.frame = CGRectMake((backgroundW-messageLabelW)/2, imageViewWH, messageLabelW, messageLabelH);
 				break;
 			case OYQImagePositionBottom:
-				imageView.frame = CGRectMake((self.frame.size.width-imageViewWH)/2, self.frame.size.height-imageViewWH, imageViewWH, imageViewWH);
+				backgroundW = MAX(imageViewWH, messageLabelW);
+				backgroundH = imageViewWH + messageLabelH;
+				
+				imageView.frame = CGRectMake((backgroundW-imageViewWH)/2, messageLabelH, imageViewWH, imageViewWH);
+				messageLabel.frame = CGRectMake((backgroundW-messageLabelW)/2, 0, messageLabelW, messageLabelH);
 				break;
 				
 			default:
 				break;
 		}
-		
-		
+
+	}else{//只有toast文字
+		backgroundW = messageLabelW;
+		backgroundH = messageLabelH;
+		if (backgroundH < OYQToastMinHeight) {
+			backgroundH = OYQToastMinHeight;
+		}
+		messageLabel.frame = CGRectMake((backgroundW-messageLabelW)/2, (backgroundH-messageLabelH)/2, messageLabelW, messageLabelH);
 	}
 	
-	
-	
-	/*
-	CGFloat messageLabelW = titleSize.width;
-	CGFloat messageLabelH = ToastMinHeight;
-	if (titleSize.height > 30) {
-		messageLabelH = titleSize.height;
-	}
-	*/
-	
-	
-	
-	//OYQToastBackgroundView *background = [OYQToastBackgroundView shareBackgroundView];
-	//[background addSubview:messageLabel];
-	//background.frame = CGRectMake(100, 100, titleSize.width, messageLabelH);
-	//messageLabel.frame = CGRectMake(0, 0, titleSize.width, messageLabelH);
-	//CGFloat backgroundW = backgroundSize.width;
-	//CGFloat backgroundH = backgroundSize.height;
 	NSAssert(backgroundW <= MainScreenWidth, @"toast的宽度不能大于屏幕宽度");
 	NSAssert(backgroundH <= MainScreenHeight, @"toast的高度不能大于屏幕高度");
+	
+	
 	
 	CGFloat backgroundX = 0;
 	CGFloat backgroundY = 0;
@@ -197,21 +197,16 @@ static const CGFloat imageViewWH = 50;
 		default:
 			break;
 	}
-	//CGFloat backgroundX = (self.frame.size.width - backgroundW)/2;
-	//CGFloat backgroundY = (self.frame.size.height - backgroundH)/2;
 	
     background.frame = CGRectMake(backgroundX, backgroundY, backgroundW, backgroundH);
 	[self addSubview:background];
 	
-}
-
-- (void)showToastWithDuration:(float)duration{
-	OYQToastBackgroundView *background = [OYQToastBackgroundView shareBackgroundView];
+	
 	[UIView animateWithDuration:duration delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
 		background.alpha = 1.0f;
 	} completion:nil];
-		
-
+	
+	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(OYQToastDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[UIView animateWithDuration:OYQToastDismissDuration delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
 			background.alpha = 0.0f;
@@ -222,7 +217,6 @@ static const CGFloat imageViewWH = 50;
 			}
 		}];
 	});
-	
-
 }
+
 @end
