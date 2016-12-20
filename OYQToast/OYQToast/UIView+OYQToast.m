@@ -14,8 +14,10 @@
 #define MainScreenWidth CGRectGetWidth([UIScreen mainScreen].bounds)
 /// weakself
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
-
+/// 三者最大
 #define OYQ_MAX(a,b,c) MAX(a,MAX(b,c))
+
+#define OYQMessageAssert NSAssert(message != nil, @"message不能为空");
 
 //显示动画延时时间
 static const float OYQToastShowDuration = 0.3f;
@@ -33,13 +35,125 @@ static const CGFloat OYQToastMargin = 5;
 @implementation UIView (OYQToast)
 
 - (UIView *)OYQ_makeToast:(NSString *)message{
-	NSAssert(message != nil, @"message不能为空");
-	[self toastAddLabel:message
+	OYQMessageAssert
+	[self toastShowMessage:message
 			   position:OYQToastPositionDefault
 				  title:nil
 				  image:nil
 		  imagePosition:OYQImagePositionDefault
 			   duration:OYQToastDuration];
+	
+	return self;
+}
+
+- (UIView *)OYQ_makeToast:(NSString *)message
+				 duration:(float)duration{
+	OYQMessageAssert
+	[self toastShowMessage:message
+			   position:OYQToastPositionDefault
+				  title:nil
+				  image:nil
+		  imagePosition:OYQImagePositionDefault
+			   duration:duration];
+	
+	return self;
+}
+
+- (UIView *)OYQ_makeToast:(NSString *)message
+				 duration:(float)duration
+				 position:(OYQToastPosition)position{
+	OYQMessageAssert
+	[self toastShowMessage:message
+			   position:position
+				  title:nil
+				  image:nil
+		  imagePosition:OYQImagePositionDefault
+			   duration:duration];
+	
+	return self;
+}
+
+
+- (UIView *)OYQ_makeToast:(NSString *)message
+					title:(NSString *)title{
+	OYQMessageAssert
+	[self toastShowMessage:message
+			   position:OYQToastPositionDefault
+				  title:title
+				  image:nil
+		  imagePosition:OYQImagePositionDefault
+			   duration:OYQToastDuration];
+	
+	return self;
+}
+
+- (UIView *)OYQ_makeToast:(NSString *)message
+					title:(NSString *)title
+				 duration:(float)duration{
+	OYQMessageAssert
+	[self toastShowMessage:message
+			   position:OYQToastPositionDefault
+				  title:title
+				  image:nil
+		  imagePosition:OYQImagePositionDefault
+			   duration:duration];
+	
+	return self;
+}
+
+- (UIView *)OYQ_makeToast:(NSString *)message
+					title:(NSString *)title
+				 duration:(float)duration
+				 position:(OYQToastPosition)position{
+	OYQMessageAssert
+	[self toastShowMessage:message
+			   position:position
+				  title:title
+				  image:nil
+		  imagePosition:OYQImagePositionDefault
+			   duration:duration];
+	
+	return self;
+}
+
+- (UIView *)OYQ_makeToast:(NSString *)message
+					image:(UIImage *)image{
+	OYQMessageAssert
+	[self toastShowMessage:message
+			   position:OYQToastPositionDefault
+				  title:nil
+				  image:image
+		  imagePosition:OYQImagePositionDefault
+			   duration:OYQToastDuration];
+	
+	return self;
+}
+
+- (UIView *)OYQ_makeToast:(NSString *)message
+					image:(UIImage *)image
+				 duration:(float)duration{
+	OYQMessageAssert
+	[self toastShowMessage:message
+			   position:OYQToastPositionDefault
+				  title:nil
+				  image:image
+		  imagePosition:OYQImagePositionDefault
+			   duration:duration];
+	
+	return self;
+}
+
+- (UIView *)OYQ_makeToast:(NSString *)message
+					image:(UIImage *)image
+				 duration:(float)duration
+				 position:(OYQToastPosition)position{
+	OYQMessageAssert
+	[self toastShowMessage:message
+			   position:position
+				  title:nil
+				  image:image
+		  imagePosition:OYQImagePositionDefault
+			   duration:duration];
 	
 	return self;
 }
@@ -51,8 +165,8 @@ static const CGFloat OYQToastMargin = 5;
 				   image:(UIImage *)image
 		   imagePosition:(OYQImagePosition)imagePosition{
 	
-	NSAssert(message != nil, @"message不能为空");
-	[self toastAddLabel:message
+	OYQMessageAssert
+	[self toastShowMessage:message
 			   position:toastPosition
 				  title:title
 				  image:image
@@ -62,7 +176,7 @@ static const CGFloat OYQToastMargin = 5;
 	return self;
 }
 
-- (void)toastAddLabel:(NSString *)message
+- (void)toastShowMessage:(NSString *)message
 			 position:(OYQToastPosition)position
 				title:(NSString *)title
 				image:(UIImage *)image

@@ -55,6 +55,71 @@ typedef NS_ENUM(NSInteger, OYQImagePosition){
 				 duration:(float)duration
 				 position:(OYQToastPosition)position;
 
+/**
+ 创建带标题的Toast，默认延时toastDuration秒,在下方显示
+ 
+ @param message 需要显示的文字
+ @return 返回Toast
+ */
+- (UIView *)OYQ_makeToast:(NSString *)message
+					title:(NSString *)title;
+
+/**
+ 创建带标题的Toast，延时duration秒,在下方显示
+ 
+ @param message 显示的文字
+ @param duration 延时时间
+ @return 返回Toast
+ */
+- (UIView *)OYQ_makeToast:(NSString *)message
+					title:(NSString *)title
+				 duration:(float)duration;
+
+/**
+ 创建带标题的Toast，延时duration秒，显示位置position
+ 
+ @param message 显示的文字
+ @param duration 延时时间
+ @param position 显示位置OYQToastPosition
+ @return 返回Toast
+ */
+- (UIView *)OYQ_makeToast:(NSString *)message
+					title:(NSString *)title
+				 duration:(float)duration
+				 position:(OYQToastPosition)position;
+
+/**
+ 创建带图片的Toast，默认延时toastDuration秒,在下方显示
+ 
+ @param message 需要显示的文字
+ @return 返回Toast
+ */
+- (UIView *)OYQ_makeToast:(NSString *)message
+					image:(UIImage *)image;
+
+/**
+ 创建带图片的Toast，延时duration秒,在下方显示
+ 
+ @param message 显示的文字
+ @param duration 延时时间
+ @return 返回Toast
+ */
+- (UIView *)OYQ_makeToast:(NSString *)message
+					image:(UIImage *)image
+				 duration:(float)duration;
+
+/**
+ 创建带图片的Toast，延时duration秒，显示位置position
+ 
+ @param message 显示的文字
+ @param duration 延时时间
+ @param position 显示位置OYQToastPosition
+ @return 返回Toast
+ */
+- (UIView *)OYQ_makeToast:(NSString *)message
+					image:(UIImage *)image
+				 duration:(float)duration
+				 position:(OYQToastPosition)position;
 
 /**
  创建带图片、标题、内容的toast，延时duration秒，toast显示位置position，图片位置imagePosition
