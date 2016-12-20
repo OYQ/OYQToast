@@ -47,7 +47,7 @@
 
 - (void)button1Click{
 	//[self.view OYQ_makeToast:@"123阿大大一奥苏姑嫂发"];
-	[self.view OYQ_makeToast:@"123阿素雅US一大" title:@"标题标题标题标题标题标题标题标题标题标题标题" duration:2.0f toastPosition:OYQToastPositionDefault image:[UIImage imageNamed:@"icon64_wx_logo"] imagePosition:OYQImagePositionBottom];
+	[self.view OYQ_makeToast:@"123阿素雅US一大" title:nil duration:2.0f toastPosition:OYQToastPositionDefault image:[UIImage imageNamed:@"icon64_wx_logo"] imagePosition:OYQImagePositionBottom];
 }
 
 @end
