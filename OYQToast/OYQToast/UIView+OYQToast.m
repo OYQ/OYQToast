@@ -7,7 +7,6 @@
 //
 
 #import "UIView+OYQToast.h"
-#import "OYQToastBackgroundView.h"
 
 /// 屏幕高度
 #define MainScreenHeight CGRectGetHeight([UIScreen mainScreen].bounds)
@@ -16,6 +15,8 @@
 /// weakself
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
 
+#define OYQ_MAX(a,b,c) MAX(a,MAX(b,c))
+
 //显示动画延时时间
 static const float OYQToastShowDuration = 0.3f;
 //显示时间
@@ -23,9 +24,11 @@ static const float OYQToastDuration = 2.0f;
 //消失动画延时时间
 static const float OYQToastDismissDuration = 0.15f;
 // 显示图片的宽高
-static const CGFloat imageViewWH = 50;
+static const CGFloat OYQToastImageViewWH = 50;
 // Toast最小高度
 static const CGFloat OYQToastMinHeight = 30;
+// Toast内容的边距
+static const CGFloat OYQToastMargin = 5;
 
 @implementation UIView (OYQToast)
 
@@ -36,7 +39,7 @@ static const CGFloat OYQToastMinHeight = 30;
 				  title:nil
 				  image:nil
 		  imagePosition:OYQImagePositionDefault
-			   duration:OYQToastShowDuration];
+			   duration:OYQToastDuration];
 	
 	return self;
 }
@@ -54,7 +57,7 @@ static const CGFloat OYQToastMinHeight = 30;
 				  title:title
 				  image:image
 		  imagePosition:imagePosition
-			   duration:OYQToastShowDuration];
+			   duration:duration];
 	
 	return self;
 }
@@ -109,55 +112,100 @@ static const CGFloat OYQToastMinHeight = 30;
 	}
 	
 	
-	CGSize messageSize = [message boundingRectWithSize:CGSizeMake(MainScreenWidth-imageViewWH, MainScreenHeight-imageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
+	CGSize messageSize = [message boundingRectWithSize:CGSizeMake(MainScreenWidth-OYQToastImageViewWH, MainScreenHeight-OYQToastImageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
 	CGFloat messageLabelW = messageSize.width;
 	CGFloat messageLabelH = messageSize.height;
 	
 	if (image && title) {//同时有图片和标题
+		CGSize titleSize = [title boundingRectWithSize:CGSizeMake(MainScreenWidth-OYQToastImageViewWH, MainScreenHeight-OYQToastImageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
+		CGFloat titleLabelW = titleSize.width;
+		CGFloat titleLabelH = titleSize.height;
+		
+		switch (imagePosition) {
+			case OYQImagePositionDefault:
+				backgroundW = OYQToastImageViewWH + MAX(messageLabelW, titleLabelW) + 3*OYQToastMargin;
+				backgroundH = MAX(OYQToastImageViewWH, messageLabelH+titleLabelH);
+				
+				imageView.frame = CGRectMake(OYQToastMargin, (backgroundH-OYQToastImageViewWH)/2, OYQToastImageViewWH, OYQToastImageViewWH);
+				titleLabel.frame = CGRectMake((backgroundW-OYQToastImageViewWH-2*OYQToastMargin-titleLabelW)/2 + OYQToastImageViewWH +OYQToastMargin, backgroundH/2-titleLabelH, titleLabelW, titleLabelH);
+				messageLabel.frame = CGRectMake((backgroundW-OYQToastImageViewWH-2*OYQToastMargin-messageLabelW)/2 + OYQToastImageViewWH + OYQToastMargin, backgroundH/2, messageLabelW, messageLabelH);
+				
+				
+				//NSLog(@"imageX-%d,imageY-%f,messageX-%f,messageY-%f",OYQToastMargin,(backgroundH-OYQToastImageViewWH)/2, OYQToastImageViewWH,(backgroundH-messageLabelH)/2);
+				break;
+			case OYQImagePositionRight:
+				backgroundW = OYQToastImageViewWH + MAX(messageLabelW, titleLabelW) + 3*OYQToastMargin;
+				backgroundH = MAX(OYQToastImageViewWH, messageLabelH+titleLabelH);
+				
+				imageView.frame = CGRectMake(backgroundW-OYQToastImageViewWH-OYQToastMargin, (backgroundH-OYQToastImageViewWH)/2, OYQToastImageViewWH, OYQToastImageViewWH);
+				titleLabel.frame = CGRectMake((backgroundW-OYQToastImageViewWH-2*OYQToastMargin-titleLabelW)/2 + OYQToastMargin, backgroundH/2-titleLabelH, titleLabelW, titleLabelH);
+				messageLabel.frame = CGRectMake((backgroundW-OYQToastImageViewWH-2*OYQToastMargin-messageLabelW)/2 + OYQToastMargin, backgroundH/2, messageLabelW, messageLabelH);
+				break;
+			case OYQImagePositionTop:
+				backgroundW = OYQ_MAX(OYQToastImageViewWH, messageLabelW, titleLabelW) + 2*OYQToastMargin;;
+				backgroundH = OYQToastImageViewWH + messageLabelH + titleLabelH + 4*OYQToastMargin;
+				
+				imageView.frame = CGRectMake((backgroundW-OYQToastImageViewWH)/2, OYQToastMargin, OYQToastImageViewWH, OYQToastImageViewWH);
+				titleLabel.frame = CGRectMake((backgroundW-titleLabelW)/2, CGRectGetMaxY(imageView.frame)+OYQToastMargin, titleLabelW, titleLabelH);
+				messageLabel.frame = CGRectMake((backgroundW-messageLabelW)/2, CGRectGetMaxY(titleLabel.frame)+OYQToastMargin, messageLabelW, messageLabelH);
+				break;
+			case OYQImagePositionBottom:
+				backgroundW = OYQ_MAX(OYQToastImageViewWH, messageLabelW, titleLabelW) + 2*OYQToastMargin;
+				backgroundH = OYQToastImageViewWH + messageLabelH + titleLabelH + 4*OYQToastMargin;
+				
+				
+				titleLabel.frame = CGRectMake((backgroundW-titleLabelW)/2, OYQToastMargin, titleLabelW, titleLabelH);
+				messageLabel.frame = CGRectMake((backgroundW-messageLabelW)/2, CGRectGetMaxY(titleLabel.frame)+OYQToastMargin, messageLabelW, messageLabelH);
+				imageView.frame = CGRectMake((backgroundW-OYQToastImageViewWH)/2, CGRectGetMaxY(messageLabel.frame)+OYQToastMargin, OYQToastImageViewWH, OYQToastImageViewWH);
+				break;
+				
+			default:
+				break;
+		}
 		
 		
 	}else if (title){//只有标题
-		CGSize titleSize = [message boundingRectWithSize:CGSizeMake(MainScreenWidth-imageViewWH, MainScreenHeight-imageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
+		CGSize titleSize = [title boundingRectWithSize:CGSizeMake(MainScreenWidth-OYQToastImageViewWH, MainScreenHeight-OYQToastImageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
 		CGFloat titleLabelW = titleSize.width;
 		CGFloat titleLabelH = titleSize.height;
 		
 		backgroundW = MAX(titleLabelW, messageLabelW);
 		backgroundH = titleLabelH + messageLabelH;
 		
-		titleLabel.frame = CGRectMake((backgroundW-titleLabelW)/2, 0, titleLabelW, titleLabelH);
+		titleLabel.frame = CGRectMake((backgroundW-titleLabelW)/2, OYQToastMargin, titleLabelW, titleLabelH);
 		messageLabel.frame = CGRectMake((backgroundW-messageLabelW)/2, titleLabelH, messageLabelW, messageLabelH);
 		
 	}else if (image){//只有图片
 		switch (imagePosition) {
 			case OYQImagePositionDefault:
-				backgroundW = imageViewWH + messageLabelW;
-				backgroundH = MAX(imageViewWH, messageLabelH);
+				backgroundW = OYQToastImageViewWH + messageLabelW;
+				backgroundH = MAX(OYQToastImageViewWH, messageLabelH);
 				
-				imageView.frame = CGRectMake(0, (backgroundH-imageViewWH)/2, imageViewWH, imageViewWH);
-				messageLabel.frame = CGRectMake(imageViewWH, (backgroundH-messageLabelH)/2, messageLabelW, messageLabelH);
+				imageView.frame = CGRectMake(OYQToastMargin, (backgroundH-OYQToastImageViewWH)/2, OYQToastImageViewWH, OYQToastImageViewWH);
+				messageLabel.frame = CGRectMake(OYQToastImageViewWH, (backgroundH-messageLabelH)/2, messageLabelW, messageLabelH);
 				
-				//NSLog(@"imageX-%d,imageY-%f,messageX-%f,messageY-%f",0,(backgroundH-imageViewWH)/2, imageViewWH,(backgroundH-messageLabelH)/2);
+				//NSLog(@"imageX-%d,imageY-%f,messageX-%f,messageY-%f",OYQToastMargin,(backgroundH-OYQToastImageViewWH)/2, OYQToastImageViewWH,(backgroundH-messageLabelH)/2);
 				break;
 			case OYQImagePositionRight:
-				backgroundW = imageViewWH + messageLabelW;
-				backgroundH = MAX(imageViewWH, messageLabelH);
+				backgroundW = OYQToastImageViewWH + messageLabelW;
+				backgroundH = MAX(OYQToastImageViewWH, messageLabelH);
 				
-				imageView.frame = CGRectMake(backgroundW-imageViewWH, (backgroundH-imageViewWH)/2, imageViewWH, imageViewWH);
-				messageLabel.frame = CGRectMake(0, (backgroundH-messageLabelH)/2, messageLabelW, messageLabelH);
+				imageView.frame = CGRectMake(backgroundW-OYQToastImageViewWH-OYQToastMargin, (backgroundH-OYQToastImageViewWH)/2, OYQToastImageViewWH, OYQToastImageViewWH);
+				messageLabel.frame = CGRectMake(OYQToastMargin, (backgroundH-messageLabelH)/2, messageLabelW, messageLabelH);
 				break;
 			case OYQImagePositionTop:
-				backgroundW = MAX(imageViewWH, messageLabelW);
-				backgroundH = imageViewWH + messageLabelH;
+				backgroundW = MAX(OYQToastImageViewWH, messageLabelW);
+				backgroundH = OYQToastImageViewWH + messageLabelH;
 				
-				imageView.frame = CGRectMake((backgroundW-imageViewWH)/2, 0, imageViewWH, imageViewWH);
-				messageLabel.frame = CGRectMake((backgroundW-messageLabelW)/2, imageViewWH, messageLabelW, messageLabelH);
+				imageView.frame = CGRectMake((backgroundW-OYQToastImageViewWH)/2, OYQToastMargin, OYQToastImageViewWH, OYQToastImageViewWH);
+				messageLabel.frame = CGRectMake((backgroundW-messageLabelW)/2, OYQToastImageViewWH, messageLabelW, messageLabelH);
 				break;
 			case OYQImagePositionBottom:
-				backgroundW = MAX(imageViewWH, messageLabelW);
-				backgroundH = imageViewWH + messageLabelH;
+				backgroundW = MAX(OYQToastImageViewWH, messageLabelW);
+				backgroundH = OYQToastImageViewWH + messageLabelH;
 				
-				imageView.frame = CGRectMake((backgroundW-imageViewWH)/2, messageLabelH, imageViewWH, imageViewWH);
-				messageLabel.frame = CGRectMake((backgroundW-messageLabelW)/2, 0, messageLabelW, messageLabelH);
+				imageView.frame = CGRectMake((backgroundW-OYQToastImageViewWH)/2, messageLabelH, OYQToastImageViewWH, OYQToastImageViewWH);
+				messageLabel.frame = CGRectMake((backgroundW-messageLabelW)/2, OYQToastMargin, messageLabelW, messageLabelH);
 				break;
 				
 			default:
@@ -202,12 +250,12 @@ static const CGFloat OYQToastMinHeight = 30;
 	[self addSubview:background];
 	
 	
-	[UIView animateWithDuration:duration delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
+	[UIView animateWithDuration:OYQToastShowDuration delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
 		background.alpha = 1.0f;
 	} completion:nil];
 	
 	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(OYQToastDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[UIView animateWithDuration:OYQToastDismissDuration delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
 			background.alpha = 0.0f;
 		} completion:^(BOOL finished) {
