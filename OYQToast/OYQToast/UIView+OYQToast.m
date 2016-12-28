@@ -31,6 +31,8 @@ static const CGFloat OYQToastImageViewWH = 50;
 static const CGFloat OYQToastMinHeight = 30;
 // Toast内容的边距
 static const CGFloat OYQToastMargin = 5;
+// Toast的字号
+static const CGFloat OYQToastFont = 17.0f;
 
 @implementation UIView (OYQToast)
 
@@ -87,7 +89,7 @@ static const CGFloat OYQToastMargin = 5;
 			 duration:(float)duration{
 	
 	UIView *background = [[UIView alloc] init];
-	background.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+	background.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
 	background.alpha = 0.0f;
 	background.layer.cornerRadius = 5;
 	background.layer.masksToBounds = YES;
@@ -104,7 +106,7 @@ static const CGFloat OYQToastMargin = 5;
 	CGFloat backgroundH = 0;
 	
 	messageLabel.numberOfLines = 0;
-	messageLabel.font = [UIFont systemFontOfSize:13.0f];
+	messageLabel.font = [UIFont systemFontOfSize:OYQToastFont];
 	messageLabel.textAlignment = NSTextAlignmentCenter;
 	messageLabel.textColor = [UIColor whiteColor];
 	messageLabel.backgroundColor = [UIColor clearColor];
@@ -113,7 +115,7 @@ static const CGFloat OYQToastMargin = 5;
 	
 	if (title) {
 		titleLabel.numberOfLines = 1;
-		titleLabel.font = [UIFont systemFontOfSize:15.0f];
+		titleLabel.font = [UIFont systemFontOfSize:OYQToastFont];
 		titleLabel.textAlignment = NSTextAlignmentCenter;
 		titleLabel.textColor = [UIColor whiteColor];
 		titleLabel.backgroundColor = [UIColor clearColor];
@@ -129,12 +131,12 @@ static const CGFloat OYQToastMargin = 5;
 	}
 	
 	
-	CGSize messageSize = [message boundingRectWithSize:CGSizeMake(MainScreenWidth-OYQToastImageViewWH, MainScreenHeight-OYQToastImageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
+	CGSize messageSize = [message boundingRectWithSize:CGSizeMake(MainScreenWidth-OYQToastImageViewWH, MainScreenHeight-OYQToastImageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:OYQToastFont]} context:nil].size;
 	CGFloat messageLabelW = messageSize.width;
 	CGFloat messageLabelH = messageSize.height;
 	
 	if (image && title) {//同时有图片和标题
-		CGSize titleSize = [title boundingRectWithSize:CGSizeMake(MainScreenWidth-OYQToastImageViewWH, MainScreenHeight-OYQToastImageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
+		CGSize titleSize = [title boundingRectWithSize:CGSizeMake(MainScreenWidth-OYQToastImageViewWH, MainScreenHeight-OYQToastImageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:OYQToastFont]} context:nil].size;
 		CGFloat titleLabelW = titleSize.width;
 		CGFloat titleLabelH = titleSize.height;
 		
@@ -178,7 +180,7 @@ static const CGFloat OYQToastMargin = 5;
 		
 		
 	}else if (title){//只有标题
-		CGSize titleSize = [title boundingRectWithSize:CGSizeMake(MainScreenWidth-OYQToastImageViewWH, MainScreenHeight-OYQToastImageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f]} context:nil].size;
+		CGSize titleSize = [title boundingRectWithSize:CGSizeMake(MainScreenWidth-OYQToastImageViewWH, MainScreenHeight-OYQToastImageViewWH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:OYQToastFont]} context:nil].size;
 		CGFloat titleLabelW = titleSize.width;
 		CGFloat titleLabelH = titleSize.height;
 		

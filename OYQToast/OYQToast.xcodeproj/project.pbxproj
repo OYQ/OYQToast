@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		353420821E139C730031749B /* ToastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353420811E139C730031749B /* ToastViewController.m */; };
 		355AE6DE1E077B3400DC03F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 355AE6DD1E077B3400DC03F8 /* main.m */; };
 		355AE6E11E077B3400DC03F8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 355AE6E01E077B3400DC03F8 /* AppDelegate.m */; };
 		355AE6E41E077B3400DC03F8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 355AE6E31E077B3400DC03F8 /* ViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		353420801E139C730031749B /* ToastViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastViewController.h; sourceTree = "<group>"; };
+		353420811E139C730031749B /* ToastViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastViewController.m; sourceTree = "<group>"; };
 		355AE6D91E077B3400DC03F8 /* OYQToast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OYQToast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		355AE6DD1E077B3400DC03F8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		355AE6DF1E077B3400DC03F8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -65,6 +68,8 @@
 				355AE6E01E077B3400DC03F8 /* AppDelegate.m */,
 				355AE6E21E077B3400DC03F8 /* ViewController.h */,
 				355AE6E31E077B3400DC03F8 /* ViewController.m */,
+				353420801E139C730031749B /* ToastViewController.h */,
+				353420811E139C730031749B /* ToastViewController.m */,
 				355AE6F31E077C7D00DC03F8 /* UIView+OYQToast.h */,
 				355AE6F41E077C7D00DC03F8 /* UIView+OYQToast.m */,
 				355AE6E51E077B3400DC03F8 /* Main.storyboard */,
@@ -158,6 +163,7 @@
 				355AE6F51E077C7D00DC03F8 /* UIView+OYQToast.m in Sources */,
 				355AE6E41E077B3400DC03F8 /* ViewController.m in Sources */,
 				355AE6E11E077B3400DC03F8 /* AppDelegate.m in Sources */,
+				353420821E139C730031749B /* ToastViewController.m in Sources */,
 				355AE6DE1E077B3400DC03F8 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
