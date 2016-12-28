@@ -16,12 +16,12 @@
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
 /// 三者最大
 #define OYQ_MAX(a,b,c) MAX(a,MAX(b,c))
-
+/// message为空验证
 #define OYQMessageAssert NSAssert(message != nil, @"message不能为空");
 
 //显示动画延时时间
 static const float OYQToastShowDuration = 0.3f;
-//显示时间
+//动画显示时间
 static const float OYQToastDuration = 2.0f;
 //消失动画延时时间
 static const float OYQToastDismissDuration = 0.15f;
@@ -46,18 +46,6 @@ static const CGFloat OYQToastMargin = 5;
 	return self;
 }
 
-- (UIView *)OYQ_makeToast:(NSString *)message
-				 duration:(float)duration{
-	OYQMessageAssert
-	[self toastShowMessage:message
-			   position:OYQToastPositionDefault
-				  title:nil
-				  image:nil
-		  imagePosition:OYQImagePositionDefault
-			   duration:duration];
-	
-	return self;
-}
 
 - (UIView *)OYQ_makeToast:(NSString *)message
 				 duration:(float)duration
@@ -67,91 +55,6 @@ static const CGFloat OYQToastMargin = 5;
 			   position:position
 				  title:nil
 				  image:nil
-		  imagePosition:OYQImagePositionDefault
-			   duration:duration];
-	
-	return self;
-}
-
-
-- (UIView *)OYQ_makeToast:(NSString *)message
-					title:(NSString *)title{
-	OYQMessageAssert
-	[self toastShowMessage:message
-			   position:OYQToastPositionDefault
-				  title:title
-				  image:nil
-		  imagePosition:OYQImagePositionDefault
-			   duration:OYQToastDuration];
-	
-	return self;
-}
-
-- (UIView *)OYQ_makeToast:(NSString *)message
-					title:(NSString *)title
-				 duration:(float)duration{
-	OYQMessageAssert
-	[self toastShowMessage:message
-			   position:OYQToastPositionDefault
-				  title:title
-				  image:nil
-		  imagePosition:OYQImagePositionDefault
-			   duration:duration];
-	
-	return self;
-}
-
-- (UIView *)OYQ_makeToast:(NSString *)message
-					title:(NSString *)title
-				 duration:(float)duration
-				 position:(OYQToastPosition)position{
-	OYQMessageAssert
-	[self toastShowMessage:message
-			   position:position
-				  title:title
-				  image:nil
-		  imagePosition:OYQImagePositionDefault
-			   duration:duration];
-	
-	return self;
-}
-
-- (UIView *)OYQ_makeToast:(NSString *)message
-					image:(UIImage *)image{
-	OYQMessageAssert
-	[self toastShowMessage:message
-			   position:OYQToastPositionDefault
-				  title:nil
-				  image:image
-		  imagePosition:OYQImagePositionDefault
-			   duration:OYQToastDuration];
-	
-	return self;
-}
-
-- (UIView *)OYQ_makeToast:(NSString *)message
-					image:(UIImage *)image
-				 duration:(float)duration{
-	OYQMessageAssert
-	[self toastShowMessage:message
-			   position:OYQToastPositionDefault
-				  title:nil
-				  image:image
-		  imagePosition:OYQImagePositionDefault
-			   duration:duration];
-	
-	return self;
-}
-
-- (UIView *)OYQ_makeToast:(NSString *)message
-					image:(UIImage *)image
-				 duration:(float)duration
-				 position:(OYQToastPosition)position{
-	OYQMessageAssert
-	[self toastShowMessage:message
-			   position:position
-				  title:nil
-				  image:image
 		  imagePosition:OYQImagePositionDefault
 			   duration:duration];
 	
